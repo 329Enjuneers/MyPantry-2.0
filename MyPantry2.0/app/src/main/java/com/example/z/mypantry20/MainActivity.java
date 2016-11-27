@@ -3,6 +3,7 @@ package com.example.z.mypantry20;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -10,6 +11,7 @@ public class MainActivity extends AppCompatActivity
 {
     Button getStartedButton;
     Button continueButton;
+    private PantryDbHelper dbHelper;
 
 
     @Override
@@ -20,6 +22,8 @@ public class MainActivity extends AppCompatActivity
         getStartedButton = (Button) findViewById(R.id.getStartedButton);
         continueButton   = (Button) findViewById(R.id.continueButton);
         setOnClickListeners();
+        dbHelper = new PantryDbHelper(getApplicationContext());
+        Log.d("Successfully created : ",dbHelper.getDatabaseName());
     }
 
     public void setOnClickListeners()
