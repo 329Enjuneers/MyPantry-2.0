@@ -16,6 +16,15 @@ public class PantryItem
     private float amountRemaining;
     private String amountRemainingUnit;
 
+    // TODO: will be removed once we have the photo feature working. Placed for testing purposes
+    // for other feature.
+    PantryItem(String name, float amountRemaining, String amountRemainingUnit)
+    {
+        this.name = name;
+        this.amountRemaining = amountRemaining;
+        this.amountRemainingUnit = amountRemainingUnit;
+    }
+
     PantryItem(String name, Drawable photo, float amountRemaining, String amountRemainingUnit)
     {
         this.name = name;

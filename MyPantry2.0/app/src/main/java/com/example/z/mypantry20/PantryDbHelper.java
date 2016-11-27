@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * Created by rushabhs on 11/26/16.
+ * Created by Rushabh on 11/26/16.
  */
 
 public class PantryDbHelper extends SQLiteOpenHelper {
@@ -14,8 +14,8 @@ public class PantryDbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + PantryContract.Pantry.TABLE_NAME + " (" +
                     PantryContract.Pantry._ID + " INTEGER PRIMARY KEY," +
                     PantryContract.Pantry.ITEM_NAME + " VARCHAR(40) " + COMMA_SEP +
-                    PantryContract.Pantry.ITEM_CATEGORY + " VARCHAR(40) " + " )" +
-                    PantryContract.Pantry.AMOUNT_REMAINING + " VARCHAR(40) " + " )" +
+                    PantryContract.Pantry.ITEM_CATEGORY + " VARCHAR(40) " + COMMA_SEP +
+                    PantryContract.Pantry.AMOUNT_REMAINING + " VARCHAR(40) " + COMMA_SEP +
                     PantryContract.Pantry.AMOUNT_REMAINING_UNIT + " REAL " + " )";
 
     private static final String SQL_DELETE_ENTRIES =
