@@ -15,15 +15,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MyPantryView"
-
-            android:label="@string/title_activity_item_view"/>
+        <activity
+            android:name=".MyPantryView"
+            android:label="@string/title_activity_item_view" />
         <activity
             android:name=".CategoryOverviewView"
+            android:exported="true"
             android:label="@string/title_activity_category_view"
             android:theme="@style/Theme.AppCompat.Light" />
         <activity android:name=".CategoryView" />
-        <activity android:name=".RecipeView"></activity>
+        <activity android:name=".RecipeView" />
+        <activity
+            android:name=".AddCategoryActivity"
+            android:label="@string/title_activity_add_category"
+            android:theme="@style/Theme.AppCompat.Light">
+        </activity>
     </application>
 
 </manifest>
