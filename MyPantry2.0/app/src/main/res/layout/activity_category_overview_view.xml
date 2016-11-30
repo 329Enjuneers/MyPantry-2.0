@@ -10,13 +10,25 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.z.mypantry20.CategoryOverviewView">
 
-    <TextView
-        android:text="CATEGORIES OVERVIEW VIEW"
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/textView2"
-        android:textColor="@android:color/background_light"
-        android:textSize="36sp" />
+        android:id="@+id/addCategoryButton"
+        android:text="+"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ExpandableListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toStartOf="@+id/addCategoryButton"
+        android:layout_toLeftOf="@+id/addCategoryButton"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/addCategoryButton"
+        android:id="@+id/categoryList"
+        />
+
+
 </RelativeLayout>

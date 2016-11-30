@@ -18,10 +18,10 @@
         <activity android:name=".MyPantryView"
             android:label="@string/title_activity_item_view"
             android:theme="@style/AppTheme"/>
-        <activity
+        <activity android:exported="true"
             android:name=".CategoryOverviewView"
             android:label="@string/title_activity_category_view"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/Theme.AppCompat.Light" />
         <activity android:name=".CategoryView" />
         <activity android:name=".RecipeView"></activity>
     </application>

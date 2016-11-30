@@ -1,6 +1,7 @@
 package com.example.z.mypantry20;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.support.v7.widget.ContentFrameLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity
                     //TODO Launch the user's current CategoryOverView
                     Intent i = new Intent(MainActivity.this, MyPantryView.class);
                     startActivity(i);
+
                 }
             });
         }
@@ -67,6 +70,12 @@ public class MainActivity extends AppCompatActivity
                 //TODO Launch the Activity to create new pantry
                 //Intent i = new Intent();
                 //StartActivity(i);
+
+                //testing
+                Context context = getApplicationContext();
+                CharSequence text = "Clicked get started";
+                Toast t = Toast.makeText(context, text, Toast.LENGTH_SHORT);
+                t.show();
             }
         });
     }

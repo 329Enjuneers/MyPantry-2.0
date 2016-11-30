@@ -2,10 +2,6 @@ package com.example.z.mypantry20;
 
 import java.util.List;
 
-/**
- * Created by Z on 10-Nov-16.
- */
-
 
 public class Category
 {
@@ -21,4 +17,23 @@ public class Category
         this.description    = description;
         numberOfPantryItems = pantryItemList.size();
     }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public int getNumberOfPantryItems()
+    {
+        return numberOfPantryItems;
+    }
+
+
+
+
 }
