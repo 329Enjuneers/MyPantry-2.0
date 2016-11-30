@@ -32,36 +32,36 @@ public class MyPantryView extends ListActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_my_pantry_view);
+        setContentView(R.layout.activity_my_pantry_view);
 
         Intent intent = getIntent();
         dbHelper = new PantryDbHelper(getApplicationContext());
 
-        // Create a progress bar to display while the list loads
-        ProgressBar progressBar = new ProgressBar(this);
-        progressBar.setLayoutParams(new DrawerLayout.LayoutParams(DrawerLayout.LayoutParams.WRAP_CONTENT,
-                DrawerLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
-        progressBar.setIndeterminate(true);
-        getListView().setEmptyView(progressBar);
-
-        // Must add the progress bar to the root of the layout
-        ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
-        root.addView(progressBar);
-
-        // For the cursor adapter, specify which columns go into which views
-        String[] fromColumns = {ContactsContract.Data.DISPLAY_NAME};
-        int[] toViews = {android.R.id.text1}; // The TextView in simple_list_item_1
-
-        // Create an empty adapter we will use to display the loaded data.
-        // We pass null for the cursor, then update it in onLoadFinished()
-        mAdapter = new SimpleCursorAdapter(this,
-                android.R.layout.simple_list_item_1, null,
-                fromColumns, toViews, 0);
-        setListAdapter(mAdapter);
-
-        // Prepare the loader.  Either re-connect with an existing one,
-        // or start a new one.
-        getLoaderManager().initLoader(0, null, this);
+        // TODO: Update the listview with items in pantry fetched from db.
+//        ProgressBar progressBar = new ProgressBar(this);
+//        progressBar.setLayoutParams(new DrawerLayout.LayoutParams(DrawerLayout.LayoutParams.WRAP_CONTENT,
+//                DrawerLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
+//        progressBar.setIndeterminate(true);
+//        getListView().setEmptyView(progressBar);
+//
+//        // Must add the progress bar to the root of the layout
+//        ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
+//        root.addView(progressBar);
+//
+//        // For the cursor adapter, specify which columns go into which views
+//        String[] fromColumns = {ContactsContract.Data.DISPLAY_NAME};
+//        int[] toViews = {android.R.id.text1}; // The TextView in simple_list_item_1
+//
+//        // Create an empty adapter we will use to display the loaded data.
+//        // We pass null for the cursor, then update it in onLoadFinished()
+//        mAdapter = new SimpleCursorAdapter(this,
+//                android.R.layout.simple_list_item_1, null,
+//                fromColumns, toViews, 0);
+//        setListAdapter(mAdapter);
+//
+//        // Prepare the loader.  Either re-connect with an existing one,
+//        // or start a new one.
+//        getLoaderManager().initLoader(0, null, this);
     }
 
 
@@ -93,6 +93,10 @@ public class MyPantryView extends ListActivity
         // Do something when a list item is clicked
     }
 
+    /**
+     * Get all items stored in SQLite db.
+     * @return - Returns arraylist of pantry items.
+     */
     private ArrayList<PantryItem> getItems(){
         ArrayList<PantryItem> pantryItems = new ArrayList<>();
         db = dbHelper.getReadableDatabase();
