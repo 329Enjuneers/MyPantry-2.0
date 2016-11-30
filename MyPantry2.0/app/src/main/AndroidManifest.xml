@@ -16,8 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MyPantryView"
-            android:label="@string/title_activity_item_view"
-            android:theme="@style/AppTheme"/>
+            android:label="@string/title_activity_item_view"/>
         <activity
             android:name=".CategoryOverviewView"
             android:label="@string/title_activity_category_view"
