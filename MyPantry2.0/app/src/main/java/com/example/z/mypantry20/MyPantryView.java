@@ -38,30 +38,7 @@ public class MyPantryView extends ListActivity
         dbHelper = new PantryDbHelper(getApplicationContext());
 
         // TODO: Update the listview with items in pantry fetched from db.
-//        ProgressBar progressBar = new ProgressBar(this);
-//        progressBar.setLayoutParams(new DrawerLayout.LayoutParams(DrawerLayout.LayoutParams.WRAP_CONTENT,
-//                DrawerLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
-//        progressBar.setIndeterminate(true);
-//        getListView().setEmptyView(progressBar);
-//
-//        // Must add the progress bar to the root of the layout
-//        ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
-//        root.addView(progressBar);
-//
-//        // For the cursor adapter, specify which columns go into which views
-//        String[] fromColumns = {ContactsContract.Data.DISPLAY_NAME};
-//        int[] toViews = {android.R.id.text1}; // The TextView in simple_list_item_1
-//
-//        // Create an empty adapter we will use to display the loaded data.
-//        // We pass null for the cursor, then update it in onLoadFinished()
-//        mAdapter = new SimpleCursorAdapter(this,
-//                android.R.layout.simple_list_item_1, null,
-//                fromColumns, toViews, 0);
-//        setListAdapter(mAdapter);
-//
-//        // Prepare the loader.  Either re-connect with an existing one,
-//        // or start a new one.
-//        getLoaderManager().initLoader(0, null, this);
+
     }
 
 
@@ -93,33 +70,4 @@ public class MyPantryView extends ListActivity
         // Do something when a list item is clicked
     }
 
-    /**
-     * Get all items stored in SQLite db.
-     * @return - Returns arraylist of pantry items.
-     */
-    private ArrayList<PantryItem> getItems(){
-        ArrayList<PantryItem> pantryItems = new ArrayList<>();
-        db = dbHelper.getReadableDatabase();
-        String[] projections = {PantryContract.Pantry._ID, PantryContract.Pantry.ITEM_NAME, PantryContract .Pantry.ITEM_CATEGORY,
-                PantryContract.Pantry.AMOUNT_REMAINING, PantryContract.Pantry.AMOUNT_REMAINING_UNIT};
-
-        Cursor c = db.query(
-                PantryContract.Pantry.TABLE_NAME,
-                projections,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-        // Iterate over the results and return.
-        c.moveToFirst();
-        if(c.getColumnCount() > 0){
-            do{
-
-            }while(c.moveToNext());
-        }
-        c.close();
-        return pantryItems;
-    }
 }

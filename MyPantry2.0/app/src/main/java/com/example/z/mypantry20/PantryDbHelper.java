@@ -14,12 +14,21 @@ public class PantryDbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + PantryContract.Pantry.TABLE_NAME + " (" +
                     PantryContract.Pantry._ID + " INTEGER PRIMARY KEY," +
                     PantryContract.Pantry.ITEM_NAME + " VARCHAR(40) " + COMMA_SEP +
-                    PantryContract.Pantry.ITEM_CATEGORY + " VARCHAR(40) " + COMMA_SEP +
+                    PantryContract.Pantry.CATEGORY_ID + " INTEGER " + COMMA_SEP +
                     PantryContract.Pantry.AMOUNT_REMAINING + " VARCHAR(40) " + COMMA_SEP +
                     PantryContract.Pantry.AMOUNT_REMAINING_UNIT + " REAL " + " )";
 
+    private static final String SQL_CREATE_CATEGORIES =
+            "CREATE TABLE " + PantryContract.Category.TABLE_NAME + " (" +
+                    PantryContract.Pantry._ID + " INTEGER PRIMARY KEY," +
+                    PantryContract.Category.NAME + " VARCHAR(40) " + COMMA_SEP +
+                    PantryContract.Category.DESCRIPTION + " VARCHAR(40)) ";
+
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + PantryContract.Pantry.TABLE_NAME;
+
+    private static final String SQL_DELETE_CATEGORIES =
+            "DROP TABLE IF EXISTS " + PantryContract.Category.TABLE_NAME;
 
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 1;
@@ -30,11 +39,13 @@ public class PantryDbHelper extends SQLiteOpenHelper {
     }
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES);
+        db.execSQL(SQL_CREATE_CATEGORIES);
     }
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // This database is only a cache for online data, so its upgrade policy is
         // to simply to discard the data and start over
         db.execSQL(SQL_DELETE_ENTRIES);
+        db.execSQL(SQL_DELETE_CATEGORIES);
         onCreate(db);
     }
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
