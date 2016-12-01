@@ -54,11 +54,9 @@ public class AddCategoryActivity extends AppCompatActivity {
                 System.out.println("category is " + categories.get(0).toString());
 
                 ContentValues cv = new ContentValues();
-                cv.put(PantryContract.Pantry.ITEM_NAME, "milk");
-                cv.put(PantryContract.Pantry.ITEM_CATEGORY, newCategoryName);
-                cv.put(PantryContract.Pantry.AMOUNT_REMAINING, "1.7");
-                cv.put(PantryContract.Pantry.AMOUNT_REMAINING_UNIT, "oz");
-                dbHelper.getWritableDatabase().insert(PantryContract.Pantry.TABLE_NAME, null, cv);
+                cv.put(PantryContract.Category.NAME, newCategoryName);
+                cv.put(PantryContract.Category.DESCRIPTION, newCategoryDescription );
+                dbHelper.getWritableDatabase().insert(PantryContract.Category.TABLE_NAME, null, cv);
 
                 //show user a toast to confirm it was added
                 Context context = getApplicationContext();
@@ -68,8 +66,6 @@ public class AddCategoryActivity extends AppCompatActivity {
 
                 //go back to CategoryOverViewView automatically
                 finish();
-
-
             }
         });
     }

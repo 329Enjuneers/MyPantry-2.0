@@ -18,11 +18,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_width="match_parent"
-        android:contentDescription=""
         android:scaleType="fitXY" />
 
     <Button
-        android:text="\nGet Started\n"
+        android:text="Get Started"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="67dp"
@@ -31,7 +30,7 @@
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:text="\nContinue\n"
+        android:text="Continue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/continueButton"
