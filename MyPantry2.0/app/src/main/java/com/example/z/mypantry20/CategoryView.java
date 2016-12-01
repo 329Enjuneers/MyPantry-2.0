@@ -1,5 +1,6 @@
 package com.example.z.mypantry20;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -19,10 +20,14 @@ public class CategoryView extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_view);
-        setTitle("MyPantry 2.0 - Category");
 
 
-        TextView name = (TextView) findViewById(R.id.categoryName);
+        Intent i = getIntent();
+        Bundle extras = i.getExtras();
+        Category category = (Category) extras.getSerializable("category");
+        System.out.println("***category is " +category);
+        //setTitle(category.getName());
+
         TextView description = (TextView) findViewById(R.id.categoryDescription);
         ListView lv = (ListView) findViewById(R.id.pantryItemListView);
 

@@ -103,6 +103,6 @@ public class PantryItem
     @Override
     public String toString()
     {
-        return "[Name: "  + name + ", Remaining: " + amountRemaining + ", Unit: " + amountRemainingUnit + "]";
+        //return "[Name: "  + name + ", Remaining: " + amountRemaining + ", Unit: " + amountRemainingUnit + "]";
     }
 }

@@ -56,12 +56,18 @@ public class CategoryOverviewView extends AppCompatActivity {
         super.onResume();
         ArrayList<String> names = fetchCategoryNames();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.category_item_text, names);
-        ListView listView = (ListView) findViewById(R.id.categoryList);
+        final ListView listView = (ListView) findViewById(R.id.categoryList);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // TODO show pantry item
+                Intent in = new Intent(CategoryOverviewView.this, CategoryView.class);
+                System.out.println("category name is " + adapterView.getItemAtPosition(position));
+                in.putExtra("category", adapterView.getItemIdAtPosition(position));
+                //in.putExtra("categoryName", "" + adapterView.getItemAtPosition(position) + "");
+                startActivity(in);
+
             }
         });
     }
