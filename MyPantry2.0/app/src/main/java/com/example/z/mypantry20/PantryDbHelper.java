@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class PantryDbHelper extends SQLiteOpenHelper {
     private static final String COMMA_SEP = ",";
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + PantryContract.Pantry.TABLE_NAME + " (" +
+            "CREATE TABLE IF NOT EXISTS " + PantryContract.Pantry.TABLE_NAME + " (" +
                     PantryContract.Pantry._ID + " INTEGER PRIMARY KEY," +
                     PantryContract.Pantry.ITEM_NAME + " VARCHAR(40) " + COMMA_SEP +
                     PantryContract.Pantry.CATEGORY_ID + " INTEGER " + COMMA_SEP +
@@ -19,10 +19,10 @@ public class PantryDbHelper extends SQLiteOpenHelper {
                     PantryContract.Pantry.AMOUNT_REMAINING_UNIT + " REAL " + " )";
 
     private static final String SQL_CREATE_CATEGORIES =
-            "CREATE TABLE " + PantryContract.Category.TABLE_NAME + " (" +
+            "CREATE TABLE IF NOT EXISTS " + PantryContract.Category.TABLE_NAME + " (" +
                     PantryContract.Pantry._ID + " INTEGER PRIMARY KEY," +
                     PantryContract.Category.NAME + " VARCHAR(40) " + COMMA_SEP +
-                    PantryContract.Category.DESCRIPTION + " VARCHAR(40)) ";
+                    PantryContract.Category.DESCRIPTION + " VARCHAR(100)) ";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + PantryContract.Pantry.TABLE_NAME;
