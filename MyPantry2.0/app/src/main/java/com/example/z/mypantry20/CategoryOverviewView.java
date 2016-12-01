@@ -32,15 +32,14 @@ public class CategoryOverviewView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("Does this work?", "Don't know2");
         setContentView(R.layout.activity_category_overview_view);
         setTitle("MyPantry 2.0 - " + title);
 
-//NOTE changed from string to Category
+        //NOTE changed from string to Category
 
-//        ArrayList<String> names = fetchCategoryNames();
-        ArrayList<Category> names = fetchCategoryNames();
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.category_item_text, names);
+//      ArrayList<String> names = fetchCategoryNames();
+        ArrayList<Category> names = fetchCategories();
+//      ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.category_item_text, names);
         ArrayAdapter<Category> adapter = new ArrayAdapter<Category>(this, R.layout.category_item_text, names);
 
         ListView listView = (ListView) findViewById(R.id.categoryList);
@@ -48,7 +47,10 @@ public class CategoryOverviewView extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                // TODO show pantry item
+                Intent in = new Intent(CategoryOverviewView.this, CategoryView.class);
+                //passing category object to CategoryView activity
+                in.putExtra("category", (Category) adapterView.getItemAtPosition(i));
+                startActivity(in);
             }
         });
 
@@ -61,24 +63,22 @@ public class CategoryOverviewView extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        ArrayList<String> names = fetchCategoryNames();
-        ArrayList<Category> names = fetchCategoryNames();
+//      ArrayList<String> names = fetchCategoryNames();
+        ArrayList<Category> names = fetchCategories();
         ArrayAdapter<Category> adapter = new ArrayAdapter<Category>(this, R.layout.category_item_text, names);
-//NOTE changed from string to Category
+        //NOTE changed from string to Category
 
 
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.category_item_text, names);
+//      ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.category_item_text, names);
 
         final ListView listView = (ListView) findViewById(R.id.categoryList);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                // TODO show pantry item
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent in = new Intent(CategoryOverviewView.this, CategoryView.class);
-                System.out.println("category name is " + adapterView.getItemAtPosition(position));
-                in.putExtra("category", (Category) adapterView.getItemAtPosition(position));
-                //in.putExtra("categoryName", "" + adapterView.getItemAtPosition(position) + "");
+                //passing category object to CategoryView activity
+                in.putExtra("category", (Category) adapterView.getItemAtPosition(i));
                 startActivity(in);
 
             }
@@ -97,8 +97,8 @@ public class CategoryOverviewView extends AppCompatActivity {
         });
     }
 
-//NOTE changed from string to Category
-    public ArrayList<Category> fetchCategoryNames() {
+    //NOTE changed from string to Category
+    public ArrayList<Category> fetchCategories() {
 //        ArrayList<String> categories = new ArrayList<String>();
         ArrayList<Category> categories = new ArrayList<Category>();
 
@@ -108,13 +108,13 @@ public class CategoryOverviewView extends AppCompatActivity {
         c.moveToFirst();
         if (c.getColumnCount() > 0) {
             do {
-                System.out.println("first string " + c.getString(0));
-
 
                 String name = c.getString(0);
-                String desc = "";
+                //TODO don't have access to category description in database?: for now just using test string
+                String desc = "*This would be description of category*";
+                //TODO do we need to initalize the Pantry Item's list for each category here?
                 categories.add(new Category(new ArrayList<PantryItem>(), name, desc));
-//                categories.add(c.getString(0));
+//              categories.add(c.getString(0));
             }while(c.moveToNext());
         }
         c.close();

@@ -8,20 +8,25 @@
     tools:context="com.example.z.mypantry20.CategoryView"
     >
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/categoryDescription"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/pantryItemListView" />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/categoryDescription"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textAlignment="viewStart" />
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/categoryDescription"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/pantryItemListView" >
+
+
+    </ListView>
 
 
 </RelativeLayout>

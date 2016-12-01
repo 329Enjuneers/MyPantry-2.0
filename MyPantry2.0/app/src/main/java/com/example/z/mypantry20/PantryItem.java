@@ -2,13 +2,14 @@ package com.example.z.mypantry20;
 
 import android.graphics.drawable.Drawable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Z on 10-Nov-16.
  */
 
-public class PantryItem
+public class PantryItem implements Serializable
 {
     private String name;
 
