@@ -95,4 +95,11 @@ public class PantryItem
             //TODO make a conversion??
         }
     }
+
+
+    @Override
+    public String toString()
+    {
+        return "[Name: "  + name + ", Remaining: " + amountRemaining + ", Unit: " + amountRemainingUnit + "]";
+    }
 }
