@@ -1,5 +1,6 @@
 package com.example.z.mypantry20;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -37,6 +38,8 @@ public class AddCategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                PantryDbHelper dbHelper = new PantryDbHelper(getApplicationContext());
+
                 final EditText name = (EditText) findViewById(R.id.name);
                 final EditText description = (EditText) findViewById(R.id.description);
 
@@ -44,9 +47,18 @@ public class AddCategoryActivity extends AppCompatActivity {
                 ArrayList<PantryItem> pantryItemList = new ArrayList<PantryItem>();
                 pantryItemList.add(new PantryItem("milk", 10, "oz"));
 
-                Category newCategory = new Category(pantryItemList, name.getText().toString(), description.getText().toString());
+                String newCategoryName = name.getText().toString();
+                String newCategoryDescription = description.getText().toString();
+                Category newCategory = new Category(pantryItemList, newCategoryName, newCategoryDescription);
                 categories.add(newCategory);
                 System.out.println("category is " + categories.get(0).toString());
+
+                ContentValues cv = new ContentValues();
+                cv.put(PantryContract.Pantry.ITEM_NAME, "milk");
+                cv.put(PantryContract.Pantry.ITEM_CATEGORY, newCategoryName);
+                cv.put(PantryContract.Pantry.AMOUNT_REMAINING, "1.7");
+                cv.put(PantryContract.Pantry.AMOUNT_REMAINING_UNIT, "oz");
+                dbHelper.getWritableDatabase().insert(PantryContract.Pantry.TABLE_NAME, null, cv);
 
                 //show user a toast to confirm it was added
                 Context context = getApplicationContext();
@@ -56,6 +68,7 @@ public class AddCategoryActivity extends AppCompatActivity {
 
                 //go back to CategoryOverViewView automatically
                 finish();
+
 
             }
         });
