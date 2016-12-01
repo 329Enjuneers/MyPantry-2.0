@@ -16,7 +16,6 @@ public class CategoryView extends AppCompatActivity
 {
 
     private ListView lv;
-    private ArrayList<PantryItem> pantryItems = new ArrayList<PantryItem>(); ;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -30,13 +29,17 @@ public class CategoryView extends AppCompatActivity
         setTitle(category.getName());
 
         TextView description = (TextView) findViewById(R.id.categoryDescription);
+        description.setText(category.getDescription());
         ListView lv = (ListView) findViewById(R.id.pantryItemListView);
 
+        //TODO fill pantryItems from database: fetchPantryItems(categeory)
+        ArrayList<PantryItem> pantryItems = fetchPantryItems(category);
         //testing
         pantryItems.add(new PantryItem("milk", 10, "oz"));
+        pantryItems.add(new PantryItem("cheese", 1, "lb"));
+
 
         ArrayAdapter<PantryItem> arrayAdapter = new ArrayAdapter<PantryItem>(this, android.R.layout.simple_list_item_1, pantryItems);
-
         lv.setAdapter(arrayAdapter);
 
 
@@ -50,6 +53,10 @@ public class CategoryView extends AppCompatActivity
 //                startActivity(in);
             }
         });
+
+
+        //TODO implement deleting the category when swiping left
+        // http://stackoverflow.com/questions/14398733/remove-item-listview-with-slide-like-gmail
 
     }
 }

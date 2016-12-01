@@ -15,7 +15,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textAlignment="viewStart" />
+        android:textSize="14sp"
+        android:lineSpacingExtra="10sp"
+        android:textAlignment="textStart" />
 
 
     <ListView
