@@ -51,6 +51,21 @@ public class CategoryOverviewView extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ArrayList<String> names = fetchCategoryNames();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.category_item_text, names);
+        ListView listView = (ListView) findViewById(R.id.categoryList);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // TODO show pantry item
+            }
+        });
+    }
+
     public void setOnClickListeners() {
         addCategoryButton.setEnabled(true);
         addCategoryButton.setOnClickListener(new View.OnClickListener() {
