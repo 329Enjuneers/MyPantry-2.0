@@ -54,8 +54,6 @@ public class AddCategoryActivity extends AppCompatActivity {
                 Toast t = Toast.makeText(context, text, Toast.LENGTH_SHORT);
                 t.show();
 
-
-
                 //go back to CategoryOverViewView automatically
                 finish();
 

@@ -50,9 +50,8 @@ public class MainActivity extends AppCompatActivity
                 {
                     //TODO load database
                     //TODO Launch the user's current CategoryOverView
-                    Intent i = new Intent(MainActivity.this, MyPantryView.class);
+                    Intent i = new Intent(MainActivity.this, CategoryOverviewView.class);
                     startActivity(i);
-
                 }
             });
         }
