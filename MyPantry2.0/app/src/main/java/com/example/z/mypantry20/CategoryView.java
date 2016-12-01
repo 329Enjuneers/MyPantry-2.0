@@ -25,8 +25,7 @@ public class CategoryView extends AppCompatActivity
         Intent i = getIntent();
         Bundle extras = i.getExtras();
         Category category = (Category) extras.getSerializable("category");
-        System.out.println("***category is " +category);
-        //setTitle(category.getName());
+        setTitle(category.getName());
 
         TextView description = (TextView) findViewById(R.id.categoryDescription);
         ListView lv = (ListView) findViewById(R.id.pantryItemListView);

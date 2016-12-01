@@ -40,7 +40,8 @@ public class Category implements Serializable
     @Override
     public String toString()
     {
-        return "[Name: "  + name + ", Description: " + description + ", PantryItemList: " + pantryItemList.toString() + "]";
+        return name;
+        //return "[Name: "  + name + ", Description: " + description + ", PantryItemList: " + pantryItemList.toString() + "]";
     }
 
 

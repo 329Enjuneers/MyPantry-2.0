@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class CategoryOverviewView extends AppCompatActivity {
@@ -35,8 +36,13 @@ public class CategoryOverviewView extends AppCompatActivity {
         setContentView(R.layout.activity_category_overview_view);
         setTitle("MyPantry 2.0 - " + title);
 
-        ArrayList<String> names = fetchCategoryNames();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.category_item_text, names);
+//NOTE changed from string to Category
+
+//        ArrayList<String> names = fetchCategoryNames();
+        ArrayList<Category> names = fetchCategoryNames();
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.category_item_text, names);
+        ArrayAdapter<Category> adapter = new ArrayAdapter<Category>(this, R.layout.category_item_text, names);
+
         ListView listView = (ListView) findViewById(R.id.categoryList);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -51,11 +57,18 @@ public class CategoryOverviewView extends AppCompatActivity {
 
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
-        ArrayList<String> names = fetchCategoryNames();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.category_item_text, names);
+//        ArrayList<String> names = fetchCategoryNames();
+        ArrayList<Category> names = fetchCategoryNames();
+        ArrayAdapter<Category> adapter = new ArrayAdapter<Category>(this, R.layout.category_item_text, names);
+//NOTE changed from string to Category
+
+
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.category_item_text, names);
+
         final ListView listView = (ListView) findViewById(R.id.categoryList);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -64,7 +77,7 @@ public class CategoryOverviewView extends AppCompatActivity {
                 // TODO show pantry item
                 Intent in = new Intent(CategoryOverviewView.this, CategoryView.class);
                 System.out.println("category name is " + adapterView.getItemAtPosition(position));
-                in.putExtra("category", adapterView.getItemIdAtPosition(position));
+                in.putExtra("category", (Category) adapterView.getItemAtPosition(position));
                 //in.putExtra("categoryName", "" + adapterView.getItemAtPosition(position) + "");
                 startActivity(in);
 
@@ -84,16 +97,24 @@ public class CategoryOverviewView extends AppCompatActivity {
         });
     }
 
+//NOTE changed from string to Category
+    public ArrayList<Category> fetchCategoryNames() {
+//        ArrayList<String> categories = new ArrayList<String>();
+        ArrayList<Category> categories = new ArrayList<Category>();
 
-    public ArrayList<String> fetchCategoryNames() {
-        ArrayList<String> categories = new ArrayList<String>();
         PantryDbHelper dbHelper = new PantryDbHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor c = db.rawQuery("SELECT distinct " + PantryContract.Pantry.ITEM_CATEGORY + " FROM " + PantryContract.Pantry.TABLE_NAME, null);
         c.moveToFirst();
         if (c.getColumnCount() > 0) {
             do {
-                categories.add(c.getString(0));
+                System.out.println("first string " + c.getString(0));
+
+
+                String name = c.getString(0);
+                String desc = "";
+                categories.add(new Category(new ArrayList<PantryItem>(), name, desc));
+//                categories.add(c.getString(0));
             }while(c.moveToNext());
         }
         c.close();
