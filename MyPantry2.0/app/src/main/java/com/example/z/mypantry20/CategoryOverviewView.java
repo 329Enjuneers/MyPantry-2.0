@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,26 +28,19 @@ import java.util.ArrayList;
 public class CategoryOverviewView extends AppCompatActivity {
     String title = "Categories";
     Button addCategoryButton;
+    ListView categoryListView;
     ArrayList<Category> categories = new ArrayList<Category>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("Does this work?", "Don't know2");
         setContentView(R.layout.activity_category_overview_view);
         setTitle("MyPantry 2.0 - " + title);
 
         ArrayList<String> names = fetchCategoryNames();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.category_item_text, names);
-        ListView listView = (ListView) findViewById(R.id.categoryList);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                // TODO show pantry item
-            }
-        });
-
+        categoryListView = (ListView) findViewById(R.id.categoryList);
+        categoryListView.setAdapter(adapter);
         addCategoryButton = (Button) findViewById(R.id.addCategoryButton);
         setOnClickListeners();
 
@@ -58,12 +53,7 @@ public class CategoryOverviewView extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.category_item_text, names);
         ListView listView = (ListView) findViewById(R.id.categoryList);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                // TODO show pantry item
-            }
-        });
+        setOnClickListeners();
     }
 
     public void setOnClickListeners() {
@@ -74,6 +64,14 @@ public class CategoryOverviewView extends AppCompatActivity {
 
                 Intent i = new Intent(CategoryOverviewView.this, AddCategoryActivity.class);
                 startActivity(i);
+            }
+        });
+
+        categoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(CategoryOverviewView.this, CategoryView.class);
+                startActivity(intent);
             }
         });
     }
