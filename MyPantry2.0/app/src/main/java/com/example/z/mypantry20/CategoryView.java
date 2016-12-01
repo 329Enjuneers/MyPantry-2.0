@@ -1,9 +1,10 @@
 package com.example.z.mypantry20;
 
-import android.graphics.Color;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -25,13 +26,13 @@ public class CategoryView extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_view);
-        RelativeLayout rl = (RelativeLayout)findViewById(R.id.activity_category_view);
-        setTitle("MyPantry 2.0 - Category");
-        Log.d("Tag", "IS THIS WORKING");
 
 
-        TextView name = (TextView) findViewById(R.id.categoryName);
-        name.setText("Test Category");
+        Intent i = getIntent();
+        Bundle extras = i.getExtras();
+        Category category = (Category) extras.getSerializable("category");
+        setTitle(category.getName());
+
         TextView description = (TextView) findViewById(R.id.categoryDescription);
         description.setText("Test Description");
         ListView lv = (ListView) findViewById(R.id.pantryItemListView);
@@ -43,6 +44,18 @@ public class CategoryView extends AppCompatActivity
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, pantry_item_text, names);
 
         lv.setAdapter(arrayAdapter);
+
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //TODO send PantryItem information to PantryItemView for details about item: (ex photo, amount remiaing, consume)
+//                Intent in = new Intent(CategoryView.this, PantryItemView.class);
+//                //passing category object to CategoryView activity
+//                in.putExtra("pantryItem", (PantryItem) adapterView.getItemAtPosition(i));
+//                startActivity(in);
+            }
+        });
 
     }
 }

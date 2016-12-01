@@ -1,10 +1,12 @@
 package com.example.z.mypantry20;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Category {
+public class Category implements Serializable
+{
     private List<PantryItem> pantryItemList;
     private String name;
     private String description;
@@ -38,7 +40,8 @@ public class Category {
     @Override
     public String toString()
     {
-        return "[Name: "  + name + ", Description: " + description + ", PantryItemList: " + pantryItemList.toString() + "]";
+        return name;
+        //return "[Name: "  + name + ", Description: " + description + ", PantryItemList: " + pantryItemList.toString() + "]";
     }
 
 
