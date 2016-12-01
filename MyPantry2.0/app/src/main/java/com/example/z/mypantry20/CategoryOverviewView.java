@@ -1,7 +1,6 @@
 package com.example.z.mypantry20;
 
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,8 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -32,21 +29,13 @@ public class CategoryOverviewView extends AppCompatActivity {
         setTitle(title);
         new FetchCategoryTask().execute();
 
+        setTitle(title);
         addCategoryButton = (Button) findViewById(R.id.addCategoryButton);
         setOnClickListeners();
         PantryDbHelper dbHelper = new PantryDbHelper(getApplicationContext());
         Log.d("Successfully created : ",dbHelper.getDatabaseName());
-//        ContentValues v = new ContentValues();
-//        v.put(PantryContract.Pantry.ITEM_NAME, "Apple");
-//        v.put(PantryContract.Pantry.CATEGORY_ID, "1");
-//        v.put(PantryContract.Pantry.AMOUNT_REMAINING, "1.7");
-//        v.put(PantryContract.Pantry.AMOUNT_REMAINING_UNIT, "lb");
-//        dbHelper.getWritableDatabase().insert(PantryContract.Pantry.TABLE_NAME, null, v);
-//        ContentValues cv = new ContentValues();
-//        cv.put(PantryContract.Category.NAME, "Food");
-//        cv.put(PantryContract.Category.DESCRIPTION, "FOOD CATEGORY");
-//        dbHelper.getWritableDatabase().insert(PantryContract.Category.TABLE_NAME, null, cv);
     }
+
 
     @Override
     protected void onResume() {
@@ -65,7 +54,7 @@ public class CategoryOverviewView extends AppCompatActivity {
         });
     }
 
-    private class FetchCategoryTask extends AsyncTask<Void, Void, ArrayList<String>> {
+    private class FetchCategoryTask extends AsyncTask<Void, Void, ArrayList<Category>> {
         private ProgressDialog progressDialog = new ProgressDialog(CategoryOverviewView.this);
         public FetchCategoryTask(){
         }
@@ -76,16 +65,15 @@ public class CategoryOverviewView extends AppCompatActivity {
             progressDialog.show();
         }
 
-        protected ArrayList<String> doInBackground(Void... s) {
-            ArrayList<String> categories = new ArrayList<String>();
+        protected ArrayList<Category> doInBackground(Void... s) {
+            ArrayList<Category> categories = new ArrayList<>();
             PantryDbHelper dbHelper = new PantryDbHelper(getApplicationContext());
             SQLiteDatabase db = dbHelper.getReadableDatabase();
-            Cursor c = db.rawQuery("SELECT DISTINCT " + PantryContract.Category.NAME + " FROM " + PantryContract.Category.TABLE_NAME,
-                    null);
+            Cursor c = db.rawQuery("SELECT DISTINCT " + PantryContract.Category.NAME + ", " + PantryContract.Category.DESCRIPTION + " FROM " + PantryContract.Category.TABLE_NAME,null);
             c.moveToFirst();
             if (c.getColumnCount() > 0) {
                 do {
-                    categories.add(c.getString(0));
+                    categories.add(new Category(new ArrayList<PantryItem>(), c.getString(0), c.getString(1)));
                 }while(c.moveToNext());
             }
             c.close();
@@ -96,18 +84,20 @@ public class CategoryOverviewView extends AppCompatActivity {
             // Nothing onProgress
         }
 
-        protected void onPostExecute(ArrayList<String> result) {
+        protected void onPostExecute(ArrayList<Category> result) {
             progressDialog.dismiss();
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(CategoryOverviewView.this, R.layout.category_item_text, result);
+            ArrayAdapter<Category> adapter = new ArrayAdapter<>(CategoryOverviewView.this, R.layout.category_item_text, result);
             ListView listView = (ListView) findViewById(R.id.categoryList);
             listView.setAdapter(adapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    // TODO show pantry item
+                    Intent in = new Intent(CategoryOverviewView.this, CategoryView.class);
+                    //passing category object to CategoryView activity
+                    in.putExtra("category", (Category) adapterView.getItemAtPosition(i));
+                    startActivity(in);
                 }
             });
         }
     }
-
 }
