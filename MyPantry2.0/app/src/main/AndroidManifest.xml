@@ -28,8 +28,15 @@
         <activity
             android:name=".AddCategoryActivity"
             android:label="@string/title_activity_add_category"
-            android:theme="@style/Theme.AppCompat.Light">
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light" />
+        <activity
+            android:name=".PantryItemView"
+            android:label="@string/title_activity_pantry_item_view"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".AddPantryItemActivity"
+            android:label="@string/title_activity_add_pantry_item"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

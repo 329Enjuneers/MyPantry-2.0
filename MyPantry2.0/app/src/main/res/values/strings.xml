@@ -3,4 +3,6 @@
     <string name="title_activity_category_view">Category View</string>
     <string name="title_activity_item_view">Items</string>
     <string name="title_activity_add_category">Add Category</string>
+    <string name="title_activity_pantry_item_view">PantryItemView</string>
+    <string name="title_activity_add_pantry_item">AddPantryItemActivity</string>
 </resources>
