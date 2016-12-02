@@ -42,10 +42,9 @@ public class AddPantryItemActivity extends AppCompatActivity {
                 final EditText startingAmount = (EditText) findViewById(R.id.startingAmount);
                 final EditText unit = (EditText) findViewById(R.id.unit);
 
-
                 //create empty pantry item list for category constructor
-                ArrayList<PantryItem> pantryItemList = new ArrayList<PantryItem>();
-                pantryItemList.add(new PantryItem("milk", 10, "oz"));
+                //ArrayList<PantryItem> pantryItemList = new ArrayList<PantryItem>();
+                //pantryItemList.add(new PantryItem("milk", 10, "oz"));
 
                 String newName = name.getText().toString();
                 Float newAmount = Float.parseFloat(startingAmount.getText().toString());
@@ -69,8 +68,10 @@ public class AddPantryItemActivity extends AppCompatActivity {
                 Toast t = Toast.makeText(context, text, Toast.LENGTH_SHORT);
                 t.show();
 
-                //go back to CategoryOverViewView automatically
+                //go back to CategoryView automatically
                 finish();
+
+                //TODO this isn't being added to list view in CategoryView
             }
         });
     }

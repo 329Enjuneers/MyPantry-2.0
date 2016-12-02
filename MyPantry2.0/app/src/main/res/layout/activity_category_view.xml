@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_category_view"
     android:layout_width="match_parent"
@@ -12,38 +13,46 @@
     tools:context="com.example.z.mypantry20.CategoryView"
     >
 
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/pantryItemListView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/categoryDescription">
-
-
-    </ListView>
+    <!--<Button-->
+        <!--android:text="+"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_above="@+id/categoryDescription"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:id="@+id/addPantryItemButton" />-->
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/categoryDescription"
         android:textSize="14sp"
-        android:lineSpacingExtra="10sp"
-        android:textAlignment="textStart"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="36dp" />
+        />
 
-    <Button
-        android:text="+"
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/no_items_error"
+        android:textSize="30sp"
+        android:layout_below="@+id/categoryDescription"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addPantryItemButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/categoryDescription"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/addPantryItemButton" />
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/add_button"
+        />
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/pantryItemListView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/no_items_error">
+    </ListView>
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
