@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.support.annotation.IntegerRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,42 +13,33 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
-import static com.example.z.mypantry20.R.layout.pantry_item_text;
 
 public class CategoryView extends AppCompatActivity
 {
 
     private FloatingActionButton addPantryItemButton;
+    private int categoryId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_view);
-        new FetchPantryItemsTask().execute();
 
         addPantryItemButton = (FloatingActionButton) findViewById(R.id.addPantryItemButton);
         setOnClickListeners();
-
-        PantryDbHelper dbHelper = new PantryDbHelper(getApplicationContext());
-        Log.d("Successfully created : ", dbHelper.getDatabaseName());
-        dbHelper.close();
 
         Intent i = getIntent();
         Bundle extras = i.getExtras();
         Category category = (Category) extras.getSerializable("category");
         setTitle(category.getName());
-
         TextView description = (TextView) findViewById(R.id.categoryDescription);
         description.setText(category.getDescription());
+
+        categoryId = extras.getInt("category_id");
 
         //TODO implement deleting the category when swiping left?
         // http://stackoverflow.com/questions/14398733/remove-item-listview-with-slide-like-gmail
@@ -74,8 +66,6 @@ public class CategoryView extends AppCompatActivity
 
     private class FetchPantryItemsTask extends AsyncTask<Void, Void, ArrayList<PantryItem>> {
         private ProgressDialog progressDialog = new ProgressDialog(CategoryView.this);
-        ArrayAdapter<PantryItem> adapter;
-        ListView lv = (ListView) findViewById(R.id.pantryItemListView);
         public FetchPantryItemsTask(){
         }
 
@@ -89,14 +79,11 @@ public class CategoryView extends AppCompatActivity
             ArrayList<PantryItem> pantryItems = new ArrayList<>();
             PantryDbHelper dbHelper = new PantryDbHelper(getApplicationContext());
             SQLiteDatabase db = dbHelper.getReadableDatabase();
-            Cursor c = db.rawQuery("SELECT DISTINCT " + PantryContract.Pantry.ITEM_NAME + ", " + PantryContract.Pantry.AMOUNT_REMAINING + ", " + PantryContract.Pantry.AMOUNT_REMAINING_UNIT + " FROM " + PantryContract.Pantry.TABLE_NAME + " WHERE CATEGORY_ID="  + PantryContract.Pantry.CATEGORY_ID,null);
+            Cursor c = db.rawQuery("SELECT DISTINCT " + PantryContract.Pantry.ITEM_NAME + ", " + PantryContract.Pantry.AMOUNT_REMAINING + ", " + PantryContract.Pantry.AMOUNT_REMAINING_UNIT + " FROM " + PantryContract.Pantry.TABLE_NAME + " p LEFT JOIN " + PantryContract.Category.TABLE_NAME + " c ON(p.CATEGORY_ID = c._ID) WHERE p.CATEGORY_ID = " + Integer.toString(categoryId) ,null);
             c.moveToFirst();
-            //TODO this query returns nothing!
-            System.out.println("pantryItem name is " + c.getString(c.getColumnIndex(PantryContract.Pantry.ITEM_NAME)));
 
             if (c.getCount() > 0) {
                 do {
-
                     pantryItems.add(new PantryItem(c.getString(c.getColumnIndex(PantryContract.Pantry.ITEM_NAME)),
                             (c.getFloat(c.getColumnIndex(PantryContract.Pantry.AMOUNT_REMAINING))),
                             (c.getString((c.getColumnIndex(PantryContract.Pantry.AMOUNT_REMAINING_UNIT))))));
@@ -112,8 +99,9 @@ public class CategoryView extends AppCompatActivity
 
         protected void onPostExecute(ArrayList<PantryItem> result) {
             progressDialog.dismiss();
+            ListView lv = (ListView) findViewById(R.id.pantryItemListView);
             if(result.size() > 0){
-                adapter = new ArrayAdapter<>(CategoryView.this, R.layout.pantry_item_text, result);
+                ArrayAdapter<PantryItem> adapter = new ArrayAdapter<>(CategoryView.this, R.layout.pantry_item_text, result);
                 lv.setAdapter(adapter);
                 lv.setVisibility(View.VISIBLE);
                 (findViewById(R.id.no_items_error)).setVisibility(View.INVISIBLE);
@@ -124,15 +112,11 @@ public class CategoryView extends AppCompatActivity
                         //passing pantryItem object to PantryItemView activity
                         in.putExtra("pantryItem", (PantryItem) adapterView.getItemAtPosition(i));
                         startActivity(in);
-                        //TODO reload list view to show new item?
-                        adapter.notifyDataSetChanged();
                     }
                 });
-
-            }
-            else {
+            } else {
                 lv.setVisibility(View.INVISIBLE);
-                String error = "You do not have any pantry items yet.";
+                String error = "No items.";
                 ((TextView) findViewById(R.id.no_items_error)).setText(error);
                 (findViewById(R.id.no_items_error)).setVisibility(View.VISIBLE);
             }

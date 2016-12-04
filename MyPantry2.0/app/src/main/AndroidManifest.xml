@@ -23,7 +23,10 @@
             android:exported="true"
             android:label="@string/title_activity_category_view"
             android:theme="@style/Theme.AppCompat.Light" />
-        <activity android:name=".CategoryView" />
+        <activity android:name=".CategoryView"
+            android:exported="true"
+            android:label="@string/title_activity_item_view"
+            android:theme="@style/Theme.AppCompat.Light" />
         <activity android:name=".RecipeView" />
         <activity
             android:name=".AddCategoryActivity"
@@ -32,11 +35,11 @@
         <activity
             android:name=".PantryItemView"
             android:label="@string/title_activity_pantry_item_view"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light" />
         <activity
             android:name=".AddPantryItemActivity"
             android:label="@string/title_activity_add_pantry_item"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light"/>
     </application>
 
 </manifest>
