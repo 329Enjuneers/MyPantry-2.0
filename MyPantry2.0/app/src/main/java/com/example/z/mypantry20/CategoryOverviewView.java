@@ -26,12 +26,8 @@ public class CategoryOverviewView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_overview_view);
-        new FetchCategoryTask().execute();
         addCategoryButton = (FloatingActionButton) findViewById(R.id.addCategoryButton);
         setOnClickListeners();
-        PantryDbHelper dbHelper = new PantryDbHelper(getApplicationContext());
-        Log.d("Successfully created : ",dbHelper.getDatabaseName());
-        dbHelper.close();
     }
 
 
@@ -42,7 +38,6 @@ public class CategoryOverviewView extends AppCompatActivity {
     }
 
     public void setOnClickListeners() {
-        addCategoryButton.setEnabled(true);
         addCategoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,8 +50,7 @@ public class CategoryOverviewView extends AppCompatActivity {
     private class FetchCategoryTask extends AsyncTask<Void, Void, ArrayList<Category>> {
         private ProgressDialog progressDialog = new ProgressDialog(CategoryOverviewView.this);
         ArrayAdapter<Category> adapter;
-        ListView listView = (ListView) findViewById(R.id.categoryList);
-        public FetchCategoryTask(){
+        FetchCategoryTask(){
         }
 
         @Override
@@ -78,6 +72,7 @@ public class CategoryOverviewView extends AppCompatActivity {
                 }while(c.moveToNext());
             }
             c.close();
+            adapter = new ArrayAdapter<>(CategoryOverviewView.this, R.layout.category_item_text, categories);
             return categories;
         }
 
@@ -86,9 +81,9 @@ public class CategoryOverviewView extends AppCompatActivity {
         }
 
         protected void onPostExecute(ArrayList<Category> result) {
+            ListView listView = (ListView) findViewById(R.id.categoryList);
             progressDialog.dismiss();
             if(result.size() > 0){
-                adapter = new ArrayAdapter<>(CategoryOverviewView.this, R.layout.category_item_text, result);
                 listView.setAdapter(adapter);
                 listView.setVisibility(View.VISIBLE);
                 (findViewById(R.id.no_category_error)).setVisibility(View.INVISIBLE);
@@ -98,12 +93,13 @@ public class CategoryOverviewView extends AppCompatActivity {
                         Intent in = new Intent(CategoryOverviewView.this, CategoryView.class);
                         //passing category object to CategoryView activity
                         in.putExtra("category", (Category) adapterView.getItemAtPosition(i));
+                        in.putExtra("category_id",i);
                         startActivity(in);
                     }
                 });
             }else{
                 listView.setVisibility(View.INVISIBLE);
-                String error = "You do not have any category yet.";
+                String error = "No Categories.";
                 ((TextView) findViewById(R.id.no_category_error)).setText(error);
                 (findViewById(R.id.no_category_error)).setVisibility(View.VISIBLE);
             }
