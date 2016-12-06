@@ -27,11 +27,15 @@ public class AddPantryItemActivity extends AppCompatActivity {
 
     Button addButton;
     ArrayList<PantryItem> pantryItems = new ArrayList<PantryItem>();
+    int categoryId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_pantry_item);
+
+        Intent i = getIntent();
+        categoryId = i.getIntExtra("category_id", -1);
 
         addButton = (Button) findViewById(R.id.addPantryItemButton);
         setOnClickListeners();
@@ -64,6 +68,7 @@ public class AddPantryItemActivity extends AppCompatActivity {
 
                 ContentValues cv = new ContentValues();
                 cv.put(PantryContract.Pantry.ITEM_NAME, newName);
+                cv.put(PantryContract.Pantry.CATEGORY_ID, categoryId);
                 cv.put(PantryContract.Pantry.AMOUNT_REMAINING, newAmount);
                 cv.put(PantryContract.Pantry.AMOUNT_REMAINING_UNIT, newUnit);
 
