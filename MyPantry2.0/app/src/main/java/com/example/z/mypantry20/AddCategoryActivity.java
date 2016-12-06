@@ -46,17 +46,16 @@ public class AddCategoryActivity extends AppCompatActivity {
                 String newCategoryDescription = description.getText().toString();
                 if(newCategoryName.equals("")){
                     // Check if category name is empty, if so show an error.
-                    name.setError("Please give a name to this category.");
+                    name.setError("Name of the category.");
                 }else if(newCategoryDescription.equals("")) {
-                    description.setError("Please give brief description of this category.");
+                    description.setError("Description of this category.");
                 }else{
                     // Insert Category in the database.
                     Category newCategory = new Category(null, newCategoryName, newCategoryDescription);
                     new InsertCategoryTask(AddCategoryActivity.this).execute(newCategory);
+                    //go back to CategoryOverViewView automatically
+                    finish();
                 }
-
-                //go back to CategoryOverViewView automatically
-                finish();
             }
         });
     }
