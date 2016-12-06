@@ -12,6 +12,7 @@
         android:id="@+id/text_input_name_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +29,9 @@
     <android.support.design.widget.TextInputLayout
         android:id="@+id/text_input_start_amount_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_input_name_layout">
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,7 +39,6 @@
             android:ems="10"
             android:id="@+id/startingAmount"
             android:layout_marginTop="13dp"
-            android:layout_below="@+id/text_input_name_layout"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:hint="Starting Amount"/>
@@ -45,7 +47,9 @@
     <android.support.design.widget.TextInputLayout
         android:id="@+id/text_input_unit_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_input_start_amount_layout">
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,7 +57,6 @@
             android:ems="10"
             android:id="@+id/unit"
             android:layout_marginTop="13dp"
-            android:layout_below="@+id/text_input_start_amount_layout"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:hint="Unit"/>
@@ -63,9 +66,9 @@
         android:text="Add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_input_unit_layout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="67dp"
+        android:layout_below="@+id/text_input_unit_layout"
         android:id="@+id/addPantryItemButton" />
 
 </RelativeLayout>
