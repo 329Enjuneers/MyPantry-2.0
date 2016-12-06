@@ -20,7 +20,6 @@ import java.util.List;
 
 public class AddCategoryActivity extends AppCompatActivity {
 
-
     Button addButton;
 
     @Override
