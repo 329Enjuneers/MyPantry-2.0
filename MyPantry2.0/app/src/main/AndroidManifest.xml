@@ -40,6 +40,10 @@
             android:name=".AddPantryItemActivity"
             android:label="@string/title_activity_add_pantry_item"
             android:theme="@style/Theme.AppCompat.Light"/>
+        <activity
+            android:name=".AddRecipeActivity"
+            android:label="Add Recipe"
+            android:theme="@style/Theme.AppCompat.Light"/>
     </application>
 
 </manifest>

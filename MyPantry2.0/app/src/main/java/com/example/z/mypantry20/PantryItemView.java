@@ -25,7 +25,6 @@ public class PantryItemView extends AppCompatActivity {
         Intent i = getIntent();
         Bundle extras = i.getExtras();
         PantryItem pantryItem = (PantryItem) extras.getSerializable("pantryItem");
-        System.out.println("in pantry item view pantry item is " + pantryItem);
         setTitle(pantryItem.getName());
 
 

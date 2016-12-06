@@ -21,6 +21,15 @@
         android:textSize="20sp"
     />
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/pantryItemListView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/no_items_error">
+    </ListView>
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addPantryItemButton"
@@ -32,15 +41,5 @@
         app:fabSize="normal"
         app:elevation="6dp"
         app:layout_anchorGravity="bottom|right|end"/>
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/pantryItemListView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/no_items_error"
-        android:layout_marginTop="20dp">
-    </ListView>
 
 </android.support.design.widget.CoordinatorLayout>
