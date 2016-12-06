@@ -16,7 +16,11 @@ public class Category implements Serializable
         this.pantryItemList = pantryItemList;
         this.name = name;
         this.description = description;
-        numberOfPantryItems = pantryItemList.size();
+        if(pantryItemList != null){
+            numberOfPantryItems = pantryItemList.size();
+        }else{
+            numberOfPantryItems = 0;
+        }
     }
 
     public String getName()
