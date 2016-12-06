@@ -17,6 +17,7 @@ public class RecipeView extends AppCompatActivity
 
     FloatingActionButton addRecipeButton;
     Button submitRecipeButton;
+    ArrayList<PantryItem> recipeItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -30,12 +31,26 @@ public class RecipeView extends AppCompatActivity
             String name = i.getStringExtra("name");
             String amount = i.getStringExtra("amount");
             // TODO add element to view
+            //TODO is this list populated with pantry items? We need to get pantry item here to add directly
+            //PantryItem pantryItem = (PantryItem) i.getSerializable("pantryItem");
+
+
+            //TODO we don't have unit here to do it this way...
+            recipeItems.add(new PantryItem(name, Float.parseFloat(amount), "lb"));
+            ListView listView = (ListView) findViewById(R.id.recipeList);
+            //TODO how to show amount with name in the list: recipe_item_text?
+            ArrayAdapter<PantryItem> adapter = new ArrayAdapter<>(RecipeView.this, R.layout.recipe_item_text, recipeItems);
+            listView.setAdapter(adapter);
+
+
             System.out.println("Hey, I got an intent!");
         }
 
         addRecipeButton = (FloatingActionButton) findViewById(R.id.addRecipeButton);
         submitRecipeButton = (Button) findViewById(R.id.submitRecipeButton);
         setOnClickListeners();
+
+
     }
 
     private void setOnClickListeners() {
@@ -50,7 +65,7 @@ public class RecipeView extends AppCompatActivity
         submitRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // update database with new values
+                //TODO update database with new values
                 Intent i = new Intent(RecipeView.this, CategoryOverviewView.class);
                 startActivity(i);
             }
