@@ -61,17 +61,17 @@ public class CategoryOverviewView extends AppCompatActivity {
 
         protected ArrayList<Category> doInBackground(Void... s) {
             ArrayList<Category> categories = new ArrayList<>();
-//            PantryDbHelper dbHelper = new PantryDbHelper(getApplicationContext());
-//            SQLiteDatabase db = dbHelper.getReadableDatabase();
-//            Cursor c = db.rawQuery("SELECT DISTINCT " + PantryContract.Category.NAME + ", " + PantryContract.Category.DESCRIPTION + " FROM " + PantryContract.Category.TABLE_NAME,null);
-//            c.moveToFirst();
-//            if (c.getCount() > 0) {
-//                do {
-//                    categories.add(new Category(new ArrayList<PantryItem>(), c.getString(c.getColumnIndex(PantryContract.Category.NAME)), c.getString
-//                            (c.getColumnIndex(PantryContract.Category.DESCRIPTION))));
-//                }while(c.moveToNext());
-//            }
-//            c.close();
+            PantryDbHelper dbHelper = new PantryDbHelper(getApplicationContext());
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+            Cursor c = db.rawQuery("SELECT DISTINCT " + PantryContract.Category.NAME + ", " + PantryContract.Category.DESCRIPTION + " FROM " + PantryContract.Category.TABLE_NAME,null);
+            c.moveToFirst();
+            if (c.getCount() > 0) {
+                do {
+                    categories.add(new Category(new ArrayList<PantryItem>(), c.getString(c.getColumnIndex(PantryContract.Category.NAME)), c.getString
+                            (c.getColumnIndex(PantryContract.Category.DESCRIPTION))));
+                }while(c.moveToNext());
+            }
+            c.close();
             adapter = new ArrayAdapter<>(CategoryOverviewView.this, R.layout.category_item_text, categories);
             return categories;
         }
