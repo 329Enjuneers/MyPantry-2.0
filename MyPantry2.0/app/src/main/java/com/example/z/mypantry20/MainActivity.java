@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity
 {
     Button getStartedButton;
     Button continueButton;
-    private static PantryDbHelper dbHelper;
+    public static PantryDbHelper dbHelper;
     boolean enableContinueButton = true;
 
     @Override

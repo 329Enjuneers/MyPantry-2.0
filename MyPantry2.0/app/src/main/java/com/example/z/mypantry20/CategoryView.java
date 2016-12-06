@@ -35,9 +35,7 @@ public class CategoryView extends AppCompatActivity
         Intent i = getIntent();
         Bundle extras = i.getExtras();
         Category category = (Category) extras.getSerializable("category");
-        setTitle(category.getName());
-        TextView description = (TextView) findViewById(R.id.categoryDescription);
-        description.setText(category.getDescription());
+        setTitle(category.getName() + " - " + category.getDescription());
 
         categoryId = extras.getInt("category_id");
 
@@ -58,6 +56,7 @@ public class CategoryView extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(CategoryView.this, AddPantryItemActivity.class);
+                i.putExtra("category_id", categoryId);
                 startActivity(i);
 
             }
