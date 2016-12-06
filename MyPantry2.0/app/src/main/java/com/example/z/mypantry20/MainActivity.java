@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity
 {
     Button getStartedButton;
     Button continueButton;
-    PantryDbHelper dbHelper = new PantryDbHelper(this);
+    private static PantryDbHelper dbHelper;
     boolean enableContinueButton = true;
 
     @Override
@@ -21,8 +21,10 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if(dbHelper != null){
-            // Database exist skip the welcome screen.
+        if (dbHelper == null) {
+            dbHelper = new PantryDbHelper(this);
+        }
+        else {
             enableContinueButton = false;
         }
         getStartedButton = (Button) findViewById(R.id.getStartedButton);
