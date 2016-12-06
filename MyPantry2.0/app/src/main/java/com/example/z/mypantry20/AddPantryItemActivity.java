@@ -26,8 +26,8 @@ import java.util.ArrayList;
 
 public class AddPantryItemActivity extends AppCompatActivity {
 
-    Button addButton;
-    int categoryId;
+    private Button addButton;
+    private int categoryId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,34 +47,34 @@ public class AddPantryItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                // We came here from an unknown place finish() up this activity now.
+                if(categoryId == -1){
+                    finish();
+                }
+
                 final EditText name = (EditText) findViewById(R.id.name);
                 final EditText startingAmount = (EditText) findViewById(R.id.startingAmount);
                 final EditText unit = (EditText) findViewById(R.id.unit);
 
                 String newName = name.getText().toString();
-                Float newAmount = Float.parseFloat(startingAmount.getText().toString());
                 String newUnit = unit.getText().toString();
 
                 if(newName.equals("")){
                     // Check if category name is empty, if so show an error.
                     name.setError("Name of this item.");
-                }else if(newAmount.equals("")) {
+                }else if(startingAmount.getText().toString().equals("")) {
                     startingAmount.setError("Starting amount for this item.");
                 }else if(newUnit.equals("")) {
                     unit.setError("Units of this item.");
                 }else{
+                    // Get the float amount for this item.
+                    Float newAmount = Float.parseFloat(startingAmount.getText().toString());
                     // Insert Item in the database.
                     PantryItem newItem = new PantryItem(newName, newAmount, newUnit);
                     new InsertPantryItemTask(AddPantryItemActivity.this).execute(newItem);
                     //go back to CategoryOverViewView automatically
                     finish();
                 }
-
-                //show user a toast to confirm it was added
-                Context context = getApplicationContext();
-                CharSequence text = "Added Pantry Item " + name.getText().toString();
-                Toast t = Toast.makeText(context, text, Toast.LENGTH_SHORT);
-                t.show();
             }
         });
     }
@@ -96,7 +96,7 @@ public class AddPantryItemActivity extends AppCompatActivity {
             newItem = s[0];
             ContentValues cv = new ContentValues();
             cv.put(PantryContract.Pantry.ITEM_NAME, newItem.getName());
-            cv.put(PantryContract.Pantry.CATEGORY_ID, 1);
+            cv.put(PantryContract.Pantry.CATEGORY_ID, categoryId);
             cv.put(PantryContract.Pantry.AMOUNT_REMAINING, newItem.getAmountRemaining());
             cv.put(PantryContract.Pantry.AMOUNT_REMAINING_UNIT, newItem.getAmountRemainingUnit());
             dbHelper.getWritableDatabase().insert(PantryContract.Pantry.TABLE_NAME, null, cv);
@@ -110,7 +110,8 @@ public class AddPantryItemActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean success) {
             if(success){
                 Log.d("Successfully added", "");
-                CharSequence text = "Item " + newItem.getName() + " Added";
+                //show user a toast to confirm it was added
+                CharSequence text = "Added Pantry Item " + newItem.getName();
                 Toast t = Toast.makeText(context, text, Toast.LENGTH_SHORT);
                 t.show();
             }else{
