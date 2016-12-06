@@ -21,12 +21,14 @@ import java.util.ArrayList;
 
 public class CategoryOverviewView extends AppCompatActivity {
     FloatingActionButton addCategoryButton;
+    Button addRecipeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_overview_view);
         addCategoryButton = (FloatingActionButton) findViewById(R.id.addCategoryButton);
+        addRecipeButton = (Button) findViewById(R.id.addRecipeButton);
         setOnClickListeners();
     }
 
@@ -42,6 +44,13 @@ public class CategoryOverviewView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(CategoryOverviewView.this, AddCategoryActivity.class);
+                startActivity(i);
+            }
+        });
+        addRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(CategoryOverviewView.this, RecipeView.class);
                 startActivity(i);
             }
         });
@@ -72,6 +81,7 @@ public class CategoryOverviewView extends AppCompatActivity {
                 }while(c.moveToNext());
             }
             c.close();
+            db.close();
             adapter = new ArrayAdapter<>(CategoryOverviewView.this, R.layout.category_item_text, categories);
             return categories;
         }
