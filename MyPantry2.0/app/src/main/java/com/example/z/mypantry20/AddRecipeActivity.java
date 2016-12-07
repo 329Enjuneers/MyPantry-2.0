@@ -39,9 +39,14 @@ public class AddRecipeActivity extends AppCompatActivity {
                 Spinner spinner = (Spinner) findViewById(R.id.pantry_item_spinner);
                 String name = spinner.getSelectedItem().toString();
                 EditText text = (EditText) findViewById(R.id.amount);
+                EditText unitText = (EditText) findViewById(R.id.unit);
+
                 String amount = text.getText().toString();
-                i.putExtra("name", name);
+                String unit = unitText.getText().toString();
+
+                i.putExtra("pantryItem", new PantryItem(name, Float.parseFloat(amount), unit));
                 i.putExtra("amount", amount);
+                i.putExtra("unit", unit);
                 startActivity(i);
             }
         });

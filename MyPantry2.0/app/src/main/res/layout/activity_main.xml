@@ -20,25 +20,27 @@
         android:layout_width="match_parent"
         android:scaleType="fitXY" />
 
-    <Button
-        android:text="Get Started"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="67dp"
-        android:id="@+id/getStartedButton"
-        android:layout_alignBottom="@+id/continueButton"
-        android:layout_centerHorizontal="true" />
+    <!--<Button-->
+        <!--android:text="Get Started"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="67dp"-->
+        <!--android:id="@+id/getStartedButton"-->
+        <!--android:layout_alignBottom="@+id/continueButton"-->
+        <!--android:layout_centerHorizontal="true" />-->
 
     <Button
         android:text="Continue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/continueButton"
-        android:layout_marginBottom="18dp"
+        android:layout_marginBottom="26dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/getStartedButton"
-        android:layout_alignStart="@+id/getStartedButton"
-        android:layout_alignRight="@+id/getStartedButton"
-        android:layout_alignEnd="@+id/getStartedButton" />
+        android:layout_centerHorizontal="true" />
+
+    <!--android:layout_alignLeft="@+id/getStartedButton"-->
+        <!--android:layout_alignStart="@+id/getStartedButton"-->
+        <!--android:layout_alignRight="@+id/getStartedButton"-->
+        <!--android:layout_alignEnd="@+id/getStartedButton" -->
 
 </RelativeLayout>
