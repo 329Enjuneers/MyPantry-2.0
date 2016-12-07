@@ -1,6 +1,10 @@
 package com.example.z.mypantry20;
 
 import android.app.ProgressDialog;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,17 +12,22 @@ import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class RecipeView extends AppCompatActivity
-{
+public class RecipeView extends AppCompatActivity {
 
     FloatingActionButton addRecipeButton;
     Button submitRecipeButton;
@@ -27,10 +36,10 @@ public class RecipeView extends AppCompatActivity
     ArrayList<String> recipeNames;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_view);
+        setTitle("Recipe");
 
         addRecipeButton = (FloatingActionButton) findViewById(R.id.addRecipeButton);
         submitRecipeButton = (Button) findViewById(R.id.submitRecipeButton);
@@ -48,15 +57,6 @@ public class RecipeView extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(RecipeView.this, AddRecipeActivity.class);
-                startActivity(i);
-            }
-        });
-
-        submitRecipeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // update database with new values
-                Intent i = new Intent(RecipeView.this, CategoryOverviewView.class);
                 startActivity(i);
             }
         });

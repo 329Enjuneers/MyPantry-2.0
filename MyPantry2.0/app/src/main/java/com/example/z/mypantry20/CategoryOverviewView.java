@@ -50,7 +50,7 @@ public class CategoryOverviewView extends AppCompatActivity {
         addRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(CategoryOverviewView.this, RecipeView.class);
+                Intent i = new Intent(CategoryOverviewView.this, AddRecipeActivity.class);
                 startActivity(i);
             }
         });

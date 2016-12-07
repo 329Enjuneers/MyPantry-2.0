@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity
         else {
             enableContinueButton = false;
         }
-        getStartedButton = (Button) findViewById(R.id.getStartedButton);
+//        getStartedButton = (Button) findViewById(R.id.getStartedButton);
         continueButton   = (Button) findViewById(R.id.continueButton);
         setOnClickListeners();
         new DbSetupTask().execute();
@@ -62,22 +62,22 @@ public class MainActivity extends AppCompatActivity
             startActivity(i);
         }
 
-        getStartedButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //TODO Launch the Activity to create new pantry
-                //Intent i = new Intent();
-                //StartActivity(i);
-
-                //testing
-                Context context = getApplicationContext();
-                CharSequence text = "Clicked get started";
-                Toast t = Toast.makeText(context, text, Toast.LENGTH_SHORT);
-                t.show();
-            }
-        });
+//        getStartedButton.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                //TODO Launch the Activity to create new pantry
+//                //Intent i = new Intent();
+//                //StartActivity(i);
+//
+//                //testing
+//                Context context = getApplicationContext();
+//                CharSequence text = "Clicked get started";
+//                Toast t = Toast.makeText(context, text, Toast.LENGTH_SHORT);
+//                t.show();
+//            }
+//        });
     }
 
     private class DbSetupTask extends AsyncTask<Void, Void, Void> {
