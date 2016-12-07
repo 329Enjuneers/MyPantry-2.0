@@ -44,7 +44,8 @@ public class AddRecipeActivity extends AppCompatActivity {
                 String amount = text.getText().toString();
                 String unit = unitText.getText().toString();
 
-                i.putExtra("pantryItem", new PantryItem(name, Float.parseFloat(amount), unit));
+                //i.putExtra("pantryItem", new PantryItem(name, Float.parseFloat(amount), unit));
+                i.putExtra("name", name);
                 i.putExtra("amount", amount);
                 i.putExtra("unit", unit);
                 startActivity(i);
