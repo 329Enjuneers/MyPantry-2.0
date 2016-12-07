@@ -1,6 +1,7 @@
 package com.example.z.mypantry20;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by josephmcgovern on 12/6/16.
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 public class AddRecipeActivity extends AppCompatActivity {
 
     private Button addButton;
+    private HashMap<String, Integer> nameToIdMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +38,18 @@ public class AddRecipeActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(AddRecipeActivity.this, RecipeView.class);
-                Spinner spinner = (Spinner) findViewById(R.id.pantry_item_spinner);
-                String name = spinner.getSelectedItem().toString();
-                EditText text = (EditText) findViewById(R.id.amount);
-                String amount = text.getText().toString();
-                i.putExtra("name", name);
-                i.putExtra("amount", amount);
-                startActivity(i);
+            Spinner spinner = (Spinner) findViewById(R.id.pantry_item_spinner);
+            String name = spinner.getSelectedItem().toString();
+            EditText text = (EditText) findViewById(R.id.amount);
+            String amount = text.getText().toString();
+            PantryDbHelper dbHelper = new PantryDbHelper(getApplicationContext());
+            ContentValues cv = new ContentValues();
+            System.out.println("ID: " + nameToIdMap.get(name));
+            cv.put(PantryContract.Recipe.PANTRY_ITEM_ID, nameToIdMap.get(name));
+            cv.put(PantryContract.Recipe.AMOUNT, amount);
+            dbHelper.getWritableDatabase().insert(PantryContract.Recipe.TABLE_NAME, null, cv);
+            Intent i = new Intent(AddRecipeActivity.this, RecipeView.class);
+            startActivity(i);
             }
         });
     }
@@ -66,14 +73,20 @@ public class AddRecipeActivity extends AppCompatActivity {
         }
 
         protected ArrayList<String> doInBackground(Void... s) {
+            nameToIdMap = new HashMap<String, Integer>();
             ArrayList<String> pantryItemNames = new ArrayList<>();
             PantryDbHelper dbHelper = new PantryDbHelper(getApplicationContext());
             SQLiteDatabase db = dbHelper.getReadableDatabase();
-            Cursor c = db.rawQuery("SELECT DISTINCT " + PantryContract.Pantry.ITEM_NAME + " FROM " + PantryContract.Pantry.TABLE_NAME,null);
+            Cursor c = db.rawQuery("SELECT DISTINCT " + PantryContract.Pantry.ITEM_NAME + ", " + PantryContract.Pantry._ID + " FROM " + PantryContract.Pantry.TABLE_NAME,null);
             c.moveToFirst();
             if (c.getCount() > 0) {
                 do {
-                    pantryItemNames.add(c.getString(0));
+                    String name = c.getString(0);
+                    System.out.println("Name: " + name);
+                    int id = c.getInt(1);
+                    System.out.println("Id: " + id);
+                    nameToIdMap.put(name, id);
+                    pantryItemNames.add(name);
                 }while(c.moveToNext());
             }
             c.close();
