@@ -1,5 +1,6 @@
 package com.example.z.mypantry20;
 
+import android.app.AlertDialog;
 import android.graphics.drawable.Drawable;
 
 import java.io.Serializable;
@@ -77,8 +78,15 @@ public class PantryItem implements Serializable
         this.amountRemainingUnit = amountRemainingUnit;
     }
 
-    private void consume(float amountToConsume, String unitToConsume)
+    /**
+     * returns 'clear' if able to consume, 'unitMisMatch' if units don't match, 'notEnough' if don't have enough of the item to consume
+     * @param amountToConsume
+     * @param unitToConsume
+     * @return
+     */
+    public String consume(float amountToConsume, String unitToConsume)
     {
+//        String verdict;
         //If the unit the user is trying to consume matches the unit of the PantryItem
         if(unitToConsume.equals(amountRemainingUnit))
         {
@@ -86,20 +94,28 @@ public class PantryItem implements Serializable
             if(amountRemaining >= amountToConsume)
             {
                 amountRemaining -= amountToConsume;
+                System.out.println("*******Consumed successfully*******");
+                return "clear";
             }
             //The user is attempting to consume more than they have
             else
             {
                 //TODO
+                System.out.println("********The user is attempting to consume more than they have*******");
+                return "notEnough";
             }
         }
         //The unit the user is trying to consume DOES NOT match the unit of the PantryItem
         else
         {
-            //TODO make a conversion??
-        }
-    }
+            //TODO make a conversion? - don't allow?
+            System.out.println("*******The unit the user is trying to consume DOES NOT match the unit of the PantryItem*******");
 
+            return "unitMisMatch";
+
+        }
+//        return verdict;
+    }
 
     @Override
     public String toString()

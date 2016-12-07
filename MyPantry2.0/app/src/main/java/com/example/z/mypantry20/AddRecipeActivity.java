@@ -39,13 +39,14 @@ public class AddRecipeActivity extends AppCompatActivity {
                 Spinner spinner = (Spinner) findViewById(R.id.pantry_item_spinner);
                 String name = spinner.getSelectedItem().toString();
                 EditText text = (EditText) findViewById(R.id.amount);
-                String amount = text.getText().toString();
+                EditText unitText = (EditText) findViewById(R.id.unit);
 
-                //TODO best way to send PantryItem object here instead of name and amount Strings?
-                // (how to get unit? or just query for Pantry Item based on name?)
-                //i.putExtra("pantryItem", new PantryItem(name, amount, unit));
-                i.putExtra("name", name);
+                String amount = text.getText().toString();
+                String unit = unitText.getText().toString();
+
+                i.putExtra("pantryItem", new PantryItem(name, Float.parseFloat(amount), unit));
                 i.putExtra("amount", amount);
+                i.putExtra("unit", unit);
                 startActivity(i);
             }
         });
