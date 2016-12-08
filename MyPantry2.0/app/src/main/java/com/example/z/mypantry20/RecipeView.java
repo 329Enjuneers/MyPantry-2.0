@@ -3,6 +3,7 @@ package com.example.z.mypantry20;
 import android.app.ProgressDialog;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,8 +32,7 @@ public class RecipeView extends AppCompatActivity {
 
     FloatingActionButton addRecipeButton;
     Button submitRecipeButton;
-    ArrayList<Integer> pantryItemIdsToUpdate;
-    HashMap<String, Float> pantryItemNameToAmountMap;
+    HashMap<Integer, Float> pantryItemIdToAmountMap;
     ArrayList<String> recipeNames;
 
     @Override
@@ -60,6 +60,39 @@ public class RecipeView extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        submitRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeAmountsFromPantryItems();
+                Toast.makeText(RecipeView.this, "Successfully updated pantry items",
+                        Toast.LENGTH_LONG).show();
+                finish();
+                startActivity(getIntent());
+            }
+
+            private void removeAmountsFromPantryItems() {
+                PantryDbHelper dbHelper = new PantryDbHelper(getApplicationContext());
+                SQLiteDatabase db = dbHelper.getReadableDatabase();
+                for (int id : pantryItemIdToAmountMap.keySet()) {
+                    Cursor c = db.rawQuery("SELECT DISTINCT " + PantryContract.Pantry.AMOUNT_REMAINING +  " FROM " + PantryContract.Pantry.TABLE_NAME + " WHERE " + PantryContract.Pantry._ID + " = " + id,null);
+                    c.moveToFirst();
+                    if (c.getCount() > 0) {
+                        String amountString = c.getString(0);
+                        float amount = new Float(amountString);
+                        float amountToSubtract = pantryItemIdToAmountMap.get(id);
+                        float newAmount = amount - amountToSubtract;
+                        ContentValues cv = new ContentValues();
+                        cv.put(PantryContract.Pantry.AMOUNT_REMAINING, Float.toString(newAmount));
+                        db.update(PantryContract.Pantry.TABLE_NAME, cv, PantryContract.Pantry._ID + " = "+id, null);
+                    }
+                    c.close();
+                }
+                db.execSQL("delete from "+ PantryContract.Recipe.TABLE_NAME);
+                db.close();
+
+            }
+
+        });
     }
 
     private class FetchRecipeItemNames extends AsyncTask<Void, Void, ArrayList<String>> {
@@ -75,8 +108,7 @@ public class RecipeView extends AppCompatActivity {
         }
 
         protected ArrayList<String> doInBackground(Void... s) {
-            pantryItemIdsToUpdate = new ArrayList<Integer>();
-            pantryItemNameToAmountMap = new HashMap<String, Float>();
+            pantryItemIdToAmountMap = new HashMap<Integer, Float>();
             recipeNames = new ArrayList<String>();
             PantryDbHelper dbHelper = new PantryDbHelper(getApplicationContext());
             SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -88,14 +120,14 @@ public class RecipeView extends AppCompatActivity {
                     String amountString = c.getString(1);
                     float amount = new Float(amountString);
                     String name = getPantryItemName(id);
-                    pantryItemNameToAmountMap.put(name, amount);
-                    pantryItemIdsToUpdate.add(id);
+                    pantryItemIdToAmountMap.put(id, amount);
                     recipeNames.add(name + " - " + amount);
                 }while(c.moveToNext());
             }
             c.close();
             db.close();
             adapter = new ArrayAdapter<>(RecipeView.this, android.R.layout.simple_spinner_dropdown_item, recipeNames);
+
             return recipeNames;
         }
 
@@ -123,6 +155,10 @@ public class RecipeView extends AppCompatActivity {
             if(result.size() > 0){
                 listView.setAdapter(adapter);
                 listView.setVisibility(View.VISIBLE);
+            }
+            if (pantryItemIdToAmountMap.size() == 0) {
+                TextView errText = (TextView) findViewById(R.id.no_recipe_error);
+                errText.setText("Click the plus button below to add a new recipe item!");
             }
         }
     }
