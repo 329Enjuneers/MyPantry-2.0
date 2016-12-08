@@ -31,8 +31,8 @@
         app:layout_anchorGravity="bottom|right|end"/>
 
     <Button
-        android:id="@+id/consumeItemsButton"
-        android:text="Consume Items"
+        android:id="@+id/submitRecipeButton"
+        android:text="Submit Recipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"

@@ -27,4 +27,10 @@ public final class PantryContract {
         public static final String NAME = "name";
         public static final String DESCRIPTION = "description";
     }
+
+    public static class Recipe implements BaseColumns {
+        public static final String TABLE_NAME = "recipe";
+        public static final String PANTRY_ITEM_ID = "pantry_item_id";
+        public static final String AMOUNT = "amount";
+    }
 }
